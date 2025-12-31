@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Server MCP - Servidor Model Context Protocol</title>
+    <meta name="description" content="Servidor MCP em Python para consultar Microsoft SQL Server via pyodbc. Exploração de banco de dados, execução de consultas seguras e análise de estrutura.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow"></div>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">sqlserver-mcp</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Recursos</a>
+                <a href="#installation">Instalação</a>
+                <a href="#tools">Ferramentas</a>
+                <a href="#use-cases">Exemplos</a>
+                <a href="#security">Segurança</a>
+                <a href="https://github.com/moigomes/sqlserver-mcp" target="_blank" class="nav-github">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    GitHub
+                </a>
+            </div>
+            <button class="nav-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero">
+        <div class="hero-container">
+            <div class="hero-badge">
+                <span class="badge-dot"></span>
+                Servidor MCP Não Oficial para SQL Server
+            </div>
+            <h1 class="hero-title">
+                <span class="title-gradient">SQL Server</span>
+                <span class="title-mcp">MCP Server</span>
+            </h1>
+            <p class="hero-description">
+                Servidor <strong>Model Context Protocol</strong> para consultar Microsoft SQL Server via pyodbc. 
+                Exploração de banco de dados, execução de consultas seguras e análise de estrutura — 
+                tudo integrado ao seu ambiente de IA.
+            </p>
+            <div class="hero-actions">
+                <a href="#installation" class="btn btn-primary">
+                    <span>Começar Agora</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/moigomes/sqlserver-mcp" target="_blank" class="btn btn-secondary">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Ver no GitHub
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-value">15+</span>
+                    <span class="stat-label">Ferramentas</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">3</span>
+                    <span class="stat-label">Plataformas</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value">100%</span>
+                    <span class="stat-label">Read-Only</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-code">
+            <div class="code-window">
+                <div class="code-header">
+                    <div class="code-dots">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                    <span class="code-title">mcp_config.json</span>
+                </div>
+                <pre class="code-content"><code>{
+  <span class="code-key">"mcpServers"</span>: {
+    <span class="code-key">"sqlserver-mcp"</span>: {
+      <span class="code-key">"command"</span>: <span class="code-string">"python"</span>,
+      <span class="code-key">"args"</span>: [<span class="code-string">"server.py"</span>],
+      <span class="code-key">"env"</span>: {
+        <span class="code-key">"SQLSERVER_SERVER"</span>: <span class="code-string">"localhost"</span>,
+        <span class="code-key">"SQLSERVER_DATABASE"</span>: <span class="code-string">"mydb"</span>
+      }
+    }
+  }
+}</code></pre>
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Recursos</span>
+                <h2 class="section-title">Tudo que você precisa para<br><span class="highlight">explorar seu banco de dados</span></h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>Exploração de Schema</h3>
+                    <p>Liste schemas, tabelas, views, procedures e funções. Navegue pela estrutura completa do seu banco de dados.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <line x1="10" y1="9" x2="8" y2="9"/>
+                        </svg>
+                    </div>
+                    <h3>Análise de Tabelas</h3>
+                    <p>Descrição de colunas, índices, chaves primárias, foreign keys e relacionamentos completos entre tabelas.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    <h3>Segurança em Primeiro Lugar</h3>
+                    <p>Apenas SELECT permitido. Bloqueio de DDL, DML e comandos perigosos. Transações read-only com rollback automático.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                        </svg>
+                    </div>
+                    <h3>Pool de Conexões</h3>
+                    <p>Gerenciamento eficiente de conexões com pool configurável. Monitore estatísticas e performance em tempo real.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                            <line x1="8" y1="21" x2="16" y2="21"/>
+                            <line x1="12" y1="17" x2="12" y2="21"/>
+                        </svg>
+                    </div>
+                    <h3>Multi-Plataforma</h3>
+                    <p>Funciona em macOS, Linux e Windows. Suporte a Docker para deploy rápido e consistente.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </div>
+                    <h3>Fácil Configuração</h3>
+                    <p>Variáveis de ambiente simples. Suporte a .env para configuração local. Pronto para uso em minutos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Installation Section -->
+    <section id="installation" class="installation">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Instalação</span>
+                <h2 class="section-title">Configure em<br><span class="highlight">poucos passos</span></h2>
+            </div>
+            
+            <div class="install-tabs">
+                <button class="tab-btn active" data-tab="macos">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                    </svg>
+                    macOS
+                </button>
+                <button class="tab-btn" data-tab="linux">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.504 0c-.155 0-.315.008-.48.021-4.226.333-3.105 4.807-3.17 6.298-.076 1.092-.3 1.953-1.05 3.02-.885 1.051-2.127 2.75-2.716 4.521-.278.832-.41 1.684-.287 2.489a.424.424 0 00-.11.135c-.26.268-.45.6-.663.839-.199.199-.485.267-.797.4-.313.136-.658.269-.864.68-.09.189-.136.394-.132.602 0 .199.027.4.055.536.058.399.116.728.04.97-.249.68-.28 1.145-.106 1.484.174.334.535.47.94.601.81.2 1.91.135 2.774.6.926.466 1.866.67 2.616.47.526-.116.97-.464 1.208-.946.587-.003 1.23-.269 2.26-.334.699-.058 1.574.267 2.577.2.025.134.063.198.114.333l.003.003c.391.778 1.113 1.132 1.884 1.071.771-.06 1.592-.536 2.257-1.306.631-.765 1.683-1.084 2.378-1.503.348-.199.629-.469.649-.853.023-.4-.2-.811-.714-1.376v-.097l-.003-.003c-.17-.2-.25-.535-.338-.926-.085-.401-.182-.786-.492-1.046h-.003c-.059-.054-.123-.067-.188-.135a.357.357 0 00-.19-.064c.431-1.278.264-2.55-.173-3.694-.533-1.41-1.465-2.638-2.175-3.483-.796-1.005-1.576-1.957-1.56-3.368.026-2.152.236-6.133-3.544-6.139zm.529 3.405h.013c.213 0 .396.062.584.198.19.135.33.332.438.533.105.259.158.459.166.724 0-.02 0-.04-.002-.059v.012c0 .086-.003.167-.015.279a2.112 2.112 0 01-.082.456 1.419 1.419 0 01-.15.344c-.084.117-.169.195-.267.267a.838.838 0 01-.369.157l-.019.003a.448.448 0 01-.088.003h-.015c-.173-.004-.3-.05-.437-.137a1.027 1.027 0 01-.305-.337 1.572 1.572 0 01-.177-.503 2.127 2.127 0 01-.039-.465c.003-.14.02-.274.055-.405.036-.137.09-.268.163-.39a.953.953 0 01.271-.298.725.725 0 01.39-.12zm-4.465.953c.193 0 .378.08.524.221.215.204.31.5.31.809 0 .238-.048.475-.127.693-.078.219-.206.416-.381.58a.851.851 0 01-.565.246.721.721 0 01-.483-.17.859.859 0 01-.26-.466 1.695 1.695 0 01-.042-.497c.013-.234.066-.468.165-.678.098-.212.251-.399.45-.529a.756.756 0 01.409-.209zm6.578 2.155c1.048 0 2.09.535 2.764 1.48.723 1.01 1.104 2.431.893 4.014-.21 1.582-.866 2.894-1.755 3.756-.445.431-1.141.792-1.846.846-.706.053-1.4-.149-1.95-.559-.552-.41-.996-.963-1.252-1.608a4.436 4.436 0 01-.31-1.737c.012-.774.211-1.537.54-2.228.33-.691.784-1.303 1.322-1.788a4.252 4.252 0 011.594-.925z"/>
+                    </svg>
+                    Linux
+                </button>
+                <button class="tab-btn" data-tab="windows">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.9-1.801"/>
+                    </svg>
+                    Windows
+                </button>
+                <button class="tab-btn" data-tab="docker">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13.983 11.078h2.119a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 00.186-.186V3.574a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 00.186-.186V6.29a.186.186 0 00-.186-.185h-2.118a.185.185 0 00-.185.185v1.887c0 .102.082.186.185.186m-2.93 0h2.12a.186.186 0 00.184-.186V6.29a.185.185 0 00-.185-.185H8.1a.185.185 0 00-.185.185v1.887c0 .102.083.186.185.186m-2.964 0h2.119a.186.186 0 00.185-.186V6.29a.185.185 0 00-.185-.185H5.136a.186.186 0 00-.186.185v1.887c0 .102.084.186.186.186m5.893 2.715h2.118a.186.186 0 00.186-.185V9.006a.186.186 0 00-.186-.186h-2.118a.185.185 0 00-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.185.185 0 00-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 00.185-.185V9.006a.185.185 0 00-.185-.186h-2.119a.185.185 0 00-.185.185v1.888c0 .102.084.185.185.185m-2.92 0h2.12a.185.185 0 00.184-.185V9.006a.185.185 0 00-.184-.186h-2.12a.186.186 0 00-.185.185v1.888c0 .102.084.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 00-.75.748 11.376 11.376 0 00.692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 003.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z"/>
+                    </svg>
+                    Docker
+                </button>
+            </div>
+
+            <div class="install-content">
+                <!-- macOS Tab -->
+                <div class="tab-content active" id="tab-macos">
+                    <div class="install-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Instale o driver ODBC</h4>
+                            <div class="code-block">
+                                <pre><code>brew update
+brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release
+brew install --no-sandbox msodbcsql18 mssql-tools18
+brew install unixodbc</code></pre>
+                                <button class="copy-btn" data-copy="brew update && brew tap microsoft/mssql-release https://github.com/Microsoft/homebrew-mssql-release && brew install --no-sandbox msodbcsql18 mssql-tools18 && brew install unixodbc">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Clone e configure</h4>
+                            <div class="code-block">
+                                <pre><code>git clone https://github.com/moigomes/sqlserver-mcp.git
+cd sqlserver-mcp
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt</code></pre>
+                                <button class="copy-btn" data-copy="git clone https://github.com/moigomes/sqlserver-mcp.git && cd sqlserver-mcp && python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Configure as variáveis de ambiente</h4>
+                            <div class="code-block">
+                                <pre><code>cp .env.example .env
+# Edite o arquivo .env com suas credenciais</code></pre>
+                                <button class="copy-btn" data-copy="cp .env.example .env">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Linux Tab -->
+                <div class="tab-content" id="tab-linux">
+                    <div class="install-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Adicione o repositório da Microsoft</h4>
+                            <div class="code-block">
+                                <pre><code>curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
+sudo apt-get update</code></pre>
+                                <button class="copy-btn" data-copy="curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - && curl https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list && sudo apt-get update">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Instale o driver ODBC</h4>
+                            <div class="code-block">
+                                <pre><code>sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18
+sudo apt-get install -y unixodbc-dev</code></pre>
+                                <button class="copy-btn" data-copy="sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 mssql-tools18 && sudo apt-get install -y unixodbc-dev">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Clone e configure</h4>
+                            <div class="code-block">
+                                <pre><code>git clone https://github.com/moigomes/sqlserver-mcp.git
+cd sqlserver-mcp
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env</code></pre>
+                                <button class="copy-btn" data-copy="git clone https://github.com/moigomes/sqlserver-mcp.git && cd sqlserver-mcp && python3 -m venv .venv && source .venv/bin/activate && pip install -r requirements.txt && cp .env.example .env">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Windows Tab -->
+                <div class="tab-content" id="tab-windows">
+                    <div class="install-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Instale o driver ODBC</h4>
+                            <p class="step-note">Baixe e instale o driver ODBC 18 da Microsoft:</p>
+                            <a href="https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server" target="_blank" class="download-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="7 10 12 15 17 10"/>
+                                    <line x1="12" y1="15" x2="12" y2="3"/>
+                                </svg>
+                                Download ODBC Driver 18 for SQL Server
+                            </a>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Clone e configure</h4>
+                            <div class="code-block">
+                                <pre><code>git clone https://github.com/moigomes/sqlserver-mcp.git
+cd sqlserver-mcp
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+copy .env.example .env</code></pre>
+                                <button class="copy-btn" data-copy="git clone https://github.com/moigomes/sqlserver-mcp.git && cd sqlserver-mcp && python -m venv .venv && .venv\Scripts\activate && pip install -r requirements.txt && copy .env.example .env">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Docker Tab -->
+                <div class="tab-content" id="tab-docker">
+                    <div class="install-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Clone o repositório</h4>
+                            <div class="code-block">
+                                <pre><code>git clone https://github.com/moigomes/sqlserver-mcp.git
+cd sqlserver-mcp</code></pre>
+                                <button class="copy-btn" data-copy="git clone https://github.com/moigomes/sqlserver-mcp.git && cd sqlserver-mcp">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Configure e execute</h4>
+                            <div class="code-block">
+                                <pre><code>cp .env.example .env
+# Edite o arquivo .env com suas credenciais
+docker-compose up -d</code></pre>
+                                <button class="copy-btn" data-copy="cp .env.example .env && docker-compose up -d">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursor Integration Section -->
+    <section class="cursor-section">
+        <div class="container">
+            <div class="cursor-content">
+                <div class="cursor-text">
+                    <span class="section-tag">Integração</span>
+                    <h2 class="section-title">Pronto para o <span class="highlight">Cursor IDE</span></h2>
+                    <p>Adicione ao seu arquivo de configuração MCP e comece a explorar seu banco de dados diretamente do editor com IA.</p>
+                    <div class="cursor-features">
+                        <div class="cursor-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Claude Desktop</span>
+                        </div>
+                        <div class="cursor-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Cursor IDE</span>
+                        </div>
+                        <div class="cursor-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>VS Code + Copilot</span>
+                        </div>
+                        <div class="cursor-feature">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="20 6 9 17 4 12"/>
+                            </svg>
+                            <span>Zed Editor</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="cursor-code">
+                    <div class="code-window">
+                        <div class="code-header">
+                            <div class="code-dots">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                            <span class="code-title">mcp_config.json</span>
+                        </div>
+                        <pre class="code-content"><code>{
+  <span class="code-key">"mcpServers"</span>: {
+    <span class="code-key">"sqlserver-mcp"</span>: {
+      <span class="code-key">"command"</span>: <span class="code-string">"/path/to/.venv/bin/python"</span>,
+      <span class="code-key">"args"</span>: [<span class="code-string">"/path/to/server.py"</span>],
+      <span class="code-key">"cwd"</span>: <span class="code-string">"/path/to/sqlserver-mcp"</span>,
+      <span class="code-key">"env"</span>: {
+        <span class="code-key">"PYTHONPATH"</span>: <span class="code-string">"."</span>,
+        <span class="code-key">"PYTHONUNBUFFERED"</span>: <span class="code-string">"1"</span>
+      }
+    }
+  }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="tools">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">API</span>
+                <h2 class="section-title">Ferramentas<br><span class="highlight">disponíveis</span></h2>
+            </div>
+            
+            <div class="tools-grid">
+                <!-- Connection Tools -->
+                <div class="tool-category">
+                    <h3 class="category-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        </svg>
+                        Conexão e Diagnóstico
+                    </h3>
+                    <div class="tool-list">
+                        <div class="tool-item">
+                            <code class="tool-name">test_connection()</code>
+                            <p class="tool-desc">Valida conexão e retorna versão do SQL Server</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">pool_stats()</code>
+                            <p class="tool-desc">Retorna estatísticas do pool de conexões</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schema Tools -->
+                <div class="tool-category">
+                    <h3 class="category-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                        </svg>
+                        Exploração de Schema
+                    </h3>
+                    <div class="tool-list">
+                        <div class="tool-item">
+                            <code class="tool-name">list_schemas()</code>
+                            <p class="tool-desc">Lista schemas disponíveis</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">list_tables(schema?)</code>
+                            <p class="tool-desc">Lista tabelas do banco</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">list_views(schema?)</code>
+                            <p class="tool-desc">Lista views do banco</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">list_procedures(schema?)</code>
+                            <p class="tool-desc">Lista stored procedures</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">list_functions(schema?)</code>
+                            <p class="tool-desc">Lista funções do usuário</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Table Analysis Tools -->
+                <div class="tool-category">
+                    <h3 class="category-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                        </svg>
+                        Análise de Tabelas
+                    </h3>
+                    <div class="tool-list">
+                        <div class="tool-item">
+                            <code class="tool-name">describe_table(table_name, schema?)</code>
+                            <p class="tool-desc">Descreve colunas de uma tabela</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">get_indexes(table_name, schema?)</code>
+                            <p class="tool-desc">Retorna índices da tabela</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">get_primary_key(table_name, schema?)</code>
+                            <p class="tool-desc">Retorna chave primária</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">get_foreign_keys(table_name, schema?)</code>
+                            <p class="tool-desc">Retorna chaves estrangeiras</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">get_table_relationships(table_name, schema?)</code>
+                            <p class="tool-desc">Retorna todos os relacionamentos</p>
+                        </div>
+                        <div class="tool-item">
+                            <code class="tool-name">get_table_row_count(table_name, schema?)</code>
+                            <p class="tool-desc">Contagem aproximada de linhas</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Query Tools -->
+                <div class="tool-category">
+                    <h3 class="category-title">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="16 18 22 12 16 6"/>
+                            <polyline points="8 6 2 12 8 18"/>
+                        </svg>
+                        Execução de Consultas
+                    </h3>
+                    <div class="tool-list">
+                        <div class="tool-item">
+                            <code class="tool-name">run_query(sql, max_rows?)</code>
+                            <p class="tool-desc">Executa consulta SELECT/CTE (padrão: 1000 linhas)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="use-cases">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Exemplos</span>
+                <h2 class="section-title">Casos de<br><span class="highlight">uso</span></h2>
+                <p class="section-subtitle">Veja como o MCP SQL Server pode acelerar seu trabalho com IA</p>
+            </div>
+            
+            <div class="use-cases-grid">
+                <!-- Use Case 1: Exploração de Schema -->
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">🔍</div>
+                        <div class="use-case-info">
+                            <h3>Exploração de Schema</h3>
+                            <span class="use-case-tag">Descoberta</span>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <div class="chat-bubble user">
+                            <p>Quais tabelas existem no banco de dados relacionadas a clientes?</p>
+                        </div>
+                        <div class="chat-bubble assistant">
+                            <p>Encontrei 3 tabelas relacionadas a clientes:</p>
+                            <div class="chat-code">
+                                <code>dbo.Customers</code> - 15.234 registros<br>
+                                <code>dbo.CustomerAddresses</code> - 18.456 registros<br>
+                                <code>dbo.CustomerOrders</code> - 142.890 registros
+                            </div>
+                            <p>A tabela principal <code>Customers</code> possui 12 colunas incluindo CustomerID (PK), Name, Email e CreatedAt.</p>
+                        </div>
+                    </div>
+                    <div class="use-case-tools">
+                        <span>Ferramentas usadas:</span>
+                        <code>list_tables()</code>
+                        <code>describe_table()</code>
+                        <code>get_table_row_count()</code>
+                    </div>
+                </div>
+
+                <!-- Use Case 2: Análise de Relacionamentos -->
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">🔗</div>
+                        <div class="use-case-info">
+                            <h3>Análise de Relacionamentos</h3>
+                            <span class="use-case-tag">Estrutura</span>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <div class="chat-bubble user">
+                            <p>Como a tabela Orders se relaciona com outras tabelas?</p>
+                        </div>
+                        <div class="chat-bubble assistant">
+                            <p>A tabela <code>Orders</code> possui os seguintes relacionamentos:</p>
+                            <div class="chat-code">
+                                <strong>→ Saída (FK desta tabela):</strong><br>
+                                • CustomerID → Customers.CustomerID<br>
+                                • ProductID → Products.ProductID<br>
+                                • ShippingID → ShippingMethods.ID<br><br>
+                                <strong>← Entrada (outras tabelas):</strong><br>
+                                • OrderItems.OrderID → Orders.OrderID<br>
+                                • Payments.OrderID → Orders.OrderID
+                            </div>
+                        </div>
+                    </div>
+                    <div class="use-case-tools">
+                        <span>Ferramentas usadas:</span>
+                        <code>get_table_relationships()</code>
+                        <code>get_foreign_keys()</code>
+                    </div>
+                </div>
+
+                <!-- Use Case 3: Consultas de Dados -->
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">📊</div>
+                        <div class="use-case-info">
+                            <h3>Consultas de Dados</h3>
+                            <span class="use-case-tag">Análise</span>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <div class="chat-bubble user">
+                            <p>Qual foi o faturamento total por mês nos últimos 6 meses?</p>
+                        </div>
+                        <div class="chat-bubble assistant">
+                            <p>Aqui está o faturamento mensal:</p>
+                            <div class="chat-code">
+                                <table class="result-table">
+                                    <tr><td>Jul/2024</td><td>R$ 245.890,00</td></tr>
+                                    <tr><td>Ago/2024</td><td>R$ 312.456,00</td></tr>
+                                    <tr><td>Set/2024</td><td>R$ 287.120,00</td></tr>
+                                    <tr><td>Out/2024</td><td>R$ 356.780,00</td></tr>
+                                    <tr><td>Nov/2024</td><td>R$ 423.900,00</td></tr>
+                                    <tr><td>Dez/2024</td><td>R$ 512.340,00</td></tr>
+                                </table>
+                            </div>
+                            <p>Crescimento de 108% no período! 📈</p>
+                        </div>
+                    </div>
+                    <div class="use-case-tools">
+                        <span>Ferramentas usadas:</span>
+                        <code>run_query()</code>
+                    </div>
+                </div>
+
+                <!-- Use Case 4: Documentação Automática -->
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">📝</div>
+                        <div class="use-case-info">
+                            <h3>Documentação Automática</h3>
+                            <span class="use-case-tag">Produtividade</span>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <div class="chat-bubble user">
+                            <p>Gere a documentação completa da tabela Products</p>
+                        </div>
+                        <div class="chat-bubble assistant">
+                            <p><strong>📋 Documentação: dbo.Products</strong></p>
+                            <div class="chat-code">
+                                <strong>Colunas:</strong><br>
+                                • ProductID (int, PK, NOT NULL)<br>
+                                • Name (nvarchar(200), NOT NULL)<br>
+                                • Price (decimal(10,2), NOT NULL)<br>
+                                • CategoryID (int, FK → Categories)<br>
+                                • Stock (int, DEFAULT 0)<br><br>
+                                <strong>Índices:</strong> IX_Category, IX_Name<br>
+                                <strong>Registros:</strong> ~8.450
+                            </div>
+                        </div>
+                    </div>
+                    <div class="use-case-tools">
+                        <span>Ferramentas usadas:</span>
+                        <code>describe_table()</code>
+                        <code>get_indexes()</code>
+                        <code>get_primary_key()</code>
+                    </div>
+                </div>
+
+                <!-- Use Case 5: Debug de Performance -->
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">⚡</div>
+                        <div class="use-case-info">
+                            <h3>Debug de Performance</h3>
+                            <span class="use-case-tag">Otimização</span>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <div class="chat-bubble user">
+                            <p>A query de relatório está lenta. Quais índices a tabela Sales possui?</p>
+                        </div>
+                        <div class="chat-bubble assistant">
+                            <p>A tabela <code>Sales</code> possui 3 índices:</p>
+                            <div class="chat-code">
+                                <strong>PK_Sales</strong> (Clustered)<br>
+                                → SaleID<br><br>
+                                <strong>IX_Sales_Date</strong> (Non-clustered)<br>
+                                → SaleDate<br><br>
+                                <strong>IX_Sales_Customer</strong> (Non-clustered)<br>
+                                → CustomerID
+                            </div>
+                            <p>⚠️ Sugestão: Falta um índice composto em (SaleDate, CustomerID) para otimizar o relatório.</p>
+                        </div>
+                    </div>
+                    <div class="use-case-tools">
+                        <span>Ferramentas usadas:</span>
+                        <code>get_indexes()</code>
+                        <code>describe_table()</code>
+                    </div>
+                </div>
+
+                <!-- Use Case 6: Migração de Dados -->
+                <div class="use-case-card">
+                    <div class="use-case-header">
+                        <div class="use-case-icon">🚀</div>
+                        <div class="use-case-info">
+                            <h3>Planejamento de Migração</h3>
+                            <span class="use-case-tag">DevOps</span>
+                        </div>
+                    </div>
+                    <div class="use-case-content">
+                        <div class="chat-bubble user">
+                            <p>Preciso migrar os dados. Liste todas as stored procedures do schema vendas</p>
+                        </div>
+                        <div class="chat-bubble assistant">
+                            <p>Encontrei 5 stored procedures no schema <code>vendas</code>:</p>
+                            <div class="chat-code">
+                                • sp_ProcessOrder<br>
+                                • sp_CalculateCommission<br>
+                                • sp_GenerateInvoice<br>
+                                • sp_UpdateInventory<br>
+                                • sp_CloseMonthlyPeriod
+                            </div>
+                            <p>Também identifiquei 2 functions e 3 views neste schema.</p>
+                        </div>
+                    </div>
+                    <div class="use-case-tools">
+                        <span>Ferramentas usadas:</span>
+                        <code>list_procedures()</code>
+                        <code>list_functions()</code>
+                        <code>list_views()</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Environment Variables Section -->
+    <section class="env-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Configuração</span>
+                <h2 class="section-title">Variáveis de<br><span class="highlight">ambiente</span></h2>
+            </div>
+            
+            <div class="env-table-wrapper">
+                <table class="env-table">
+                    <thead>
+                        <tr>
+                            <th>Variável</th>
+                            <th>Obrigatório</th>
+                            <th>Padrão</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>SQLSERVER_SERVER</code></td>
+                            <td><span class="badge required">Sim</span></td>
+                            <td>-</td>
+                            <td>Endereço do servidor</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_DATABASE</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>-</td>
+                            <td>Nome do banco de dados</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_USERNAME</code></td>
+                            <td><span class="badge conditional">Condicional*</span></td>
+                            <td>-</td>
+                            <td>Usuário para autenticação</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_PASSWORD</code></td>
+                            <td><span class="badge conditional">Condicional*</span></td>
+                            <td>-</td>
+                            <td>Senha para autenticação</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_PORT</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>1433</td>
+                            <td>Porta do servidor</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_DRIVER</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>ODBC Driver 18</td>
+                            <td>Driver ODBC</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_ENCRYPT</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>yes</td>
+                            <td>Criptografar conexão</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_TRUST_SERVER_CERTIFICATE</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>no</td>
+                            <td>Confiar em cert. autoassinado</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_TRUSTED_CONNECTION</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>no</td>
+                            <td>Usar autenticação Windows</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_LOG_LEVEL</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>INFO</td>
+                            <td>Nível de log</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_POOL_SIZE</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>5</td>
+                            <td>Tamanho do pool de conexões</td>
+                        </tr>
+                        <tr>
+                            <td><code>SQLSERVER_POOL_IDLE_TIME</code></td>
+                            <td><span class="badge optional">Não</span></td>
+                            <td>300</td>
+                            <td>Tempo de ociosidade (segundos)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="env-note">* <code>SQLSERVER_USERNAME</code> e <code>SQLSERVER_PASSWORD</code> são obrigatórios se <code>SQLSERVER_TRUSTED_CONNECTION</code> não estiver como <code>yes</code>.</p>
+        </div>
+    </section>
+
+    <!-- Security Section -->
+    <section id="security" class="security">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Proteção</span>
+                <h2 class="section-title">Segurança<br><span class="highlight">em primeiro lugar</span></h2>
+            </div>
+            
+            <div class="security-grid">
+                <div class="security-card">
+                    <div class="security-icon allowed">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                    </div>
+                    <h3>Comandos Permitidos</h3>
+                    <ul class="security-list allowed">
+                        <li><code>SELECT</code></li>
+                        <li><code>WITH</code> (CTEs)</li>
+                    </ul>
+                </div>
+                
+                <div class="security-card">
+                    <div class="security-icon blocked">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </div>
+                    <h3>Comandos Bloqueados</h3>
+                    <ul class="security-list blocked">
+                        <li><code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></li>
+                        <li><code>DROP</code>, <code>CREATE</code>, <code>ALTER</code>, <code>TRUNCATE</code></li>
+                        <li><code>EXEC</code>, <code>EXECUTE</code>, <code>xp_*</code>, <code>sp_configure</code></li>
+                        <li><code>OPENROWSET</code>, <code>OPENDATASOURCE</code>, <code>BULK</code></li>
+                    </ul>
+                </div>
+                
+                <div class="security-card full-width">
+                    <div class="security-icon protected">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                        </svg>
+                    </div>
+                    <h3>Proteções Adicionais</h3>
+                    <div class="protection-grid">
+                        <div class="protection-item">
+                            <strong>SQL Injection</strong>
+                            <p>Múltiplos statements são bloqueados automaticamente</p>
+                        </div>
+                        <div class="protection-item">
+                            <strong>Transação Read-Only</strong>
+                            <p>Todas as queries executam com ROLLBACK automático</p>
+                        </div>
+                        <div class="protection-item">
+                            <strong>Queries Parametrizadas</strong>
+                            <p>Internamente usa queries parametrizadas</p>
+                        </div>
+                        <div class="protection-item">
+                            <strong>Limite de Linhas</strong>
+                            <p>Máximo de 1000 linhas por consulta (configurável)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="error-codes">
+                <h3 class="error-title">Códigos de Erro</h3>
+                <div class="error-grid">
+                    <div class="error-item">
+                        <code>E101</code>
+                        <span>Falha na conexão</span>
+                    </div>
+                    <div class="error-item">
+                        <code>E102</code>
+                        <span>Timeout</span>
+                    </div>
+                    <div class="error-item">
+                        <code>E201</code>
+                        <span>Configuração ausente</span>
+                    </div>
+                    <div class="error-item">
+                        <code>E301</code>
+                        <span>Erro de validação</span>
+                    </div>
+                    <div class="error-item">
+                        <code>E303</code>
+                        <span>Query bloqueada</span>
+                    </div>
+                    <div class="error-item">
+                        <code>E401</code>
+                        <span>Erro na query</span>
+                    </div>
+                    <div class="error-item">
+                        <code>E402</code>
+                        <span>Tabela não encontrada</span>
+                    </div>
+                    <div class="error-item">
+                        <code>E404</code>
+                        <span>Permissão negada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">Compatibilidade</span>
+                <h2 class="section-title">Clientes<br><span class="highlight">compatíveis</span></h2>
+            </div>
+            
+            <div class="clients-grid">
+                <div class="client-card">
+                    <div class="client-icon">🖥️</div>
+                    <h4>Claude Desktop</h4>
+                    <p>macOS, Windows</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-icon">📝</div>
+                    <h4>Cursor IDE</h4>
+                    <p>Multi-plataforma</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-icon">💻</div>
+                    <h4>VS Code + Copilot</h4>
+                    <p>Suporte MCP em preview</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-icon">⚡</div>
+                    <h4>Zed</h4>
+                    <p>macOS, Linux</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-icon">🌊</div>
+                    <h4>Windsurf</h4>
+                    <p>IDE focada em IA</p>
+                </div>
+                <div class="client-card">
+                    <div class="client-icon">🔄</div>
+                    <h4>Continue</h4>
+                    <p>Extensão VS Code</p>
+                </div>
+            </div>
+            
+            <div class="clients-links">
+                <a href="https://glama.ai/mcp/clients" target="_blank" class="link-card">
+                    <span>Lista completa de clientes MCP</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                </a>
+                <a href="https://modelcontextprotocol.io" target="_blank" class="link-card">
+                    <span>Especificação MCP</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <a href="#" class="footer-logo">
+                        <span class="logo-icon">⚡</span>
+                        <span class="logo-text">sqlserver-mcp</span>
+                    </a>
+                    <p>Servidor MCP não oficial para SQL Server.<br>Desenvolvido em Python por <strong>Moises Gomes</strong>.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-col">
+                        <h5>Documentação</h5>
+                        <a href="#features">Recursos</a>
+                        <a href="#installation">Instalação</a>
+                        <a href="#tools">Ferramentas</a>
+                        <a href="#use-cases">Exemplos</a>
+                        <a href="#security">Segurança</a>
+                    </div>
+                    <div class="footer-col">
+                        <h5>Links</h5>
+                        <a href="https://github.com/moigomes/sqlserver-mcp" target="_blank">GitHub</a>
+                        <a href="https://modelcontextprotocol.io" target="_blank">MCP Spec</a>
+                        <a href="https://glama.ai/mcp/clients" target="_blank">Clientes MCP</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 sqlserver-mcp. Projeto open source.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
